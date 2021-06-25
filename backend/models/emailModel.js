@@ -23,10 +23,6 @@ let EmailSchema = new Schema(
             type: String,
             required: true
         },
-        schedule: {
-            type: Schema.Types.ObjectId,
-            ref: "SCHEDULEMODEL"
-        }
     },
     { collection: "EMAILS" },
     { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } }

@@ -22,10 +22,16 @@ let UserSchema = new Schema(
             type: String,
             required:true,
         },
-        emails: [
+        sentemails: [
             {
                 type: Schema.Types.ObjectId,
                 ref: "EMAIL"
+            }
+        ],
+        scheduledemails: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "SCHEDULES"
             }
         ]
     },

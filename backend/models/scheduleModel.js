@@ -6,6 +6,10 @@ let ScheduleModelSchema = new Schema(
     {
         id:{
             type:String
+        },
+        email : {
+            type: Schema.Types.ObjectId,
+            ref: "EMAIL"
         }
     },
     { collection: "SCHEDULES" },

@@ -80,9 +80,8 @@ exports.checkLoginId = async (req, res) => {
     }
 
     res.status(200).send({ message: true });
-
 };
 
 exports.tokenVerify = (req, res) => {
     res.status(200).send({ message: 'Token Verified' });
-};
+};  

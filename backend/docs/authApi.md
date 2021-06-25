@@ -46,7 +46,8 @@ Header
     name: user.name,
     email: user.email,
     avtarUrl: user.avtarUrl,
-    emails : List of Emails
+    emails : List of Emails Sent till now,
+    scheduled: List of Scheduled Emails
 }
 
 Status: 401
@@ -58,7 +59,7 @@ Status: 404
 Status: 500
 { message: Error(Whatever the error is) }
 ```
-    
+
 
 3. JWT Verify
 
