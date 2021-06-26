@@ -23,6 +23,9 @@ let EmailSchema = new Schema(
             type: String,
             required: true
         },
+        sentTime: {
+            type: Date,
+        }
     },
     { collection: "EMAILS" },
     { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } }
