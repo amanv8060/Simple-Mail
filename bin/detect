@@ -1,3 +1,0 @@
-#!/bin/sh
-# Usage: bin/detect <build-dir>
-exec "$1"/bin/detect "$@"

@@ -1,6 +1,10 @@
-FOr testing use :
+For testing use : https://simplemailbackend.herokuapp.com/
 
+## Available Endpoints
 
+```HTTP /api/v1/```
+
+1. [Auth](https://github.com/amanv8060/Simple-Mail/blob/master/backend/docs/authApi.md)
 
 
 ### Getting Started
