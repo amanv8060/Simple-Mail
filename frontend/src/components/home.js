@@ -103,5 +103,12 @@ export default class MenuExamplePointing extends Component {
         </div>
       </div>
     );
+    }
+ if(localStorage.getItem("jwt") === null && localStorage.getItem("jwt") == undefined) 
+    {
+      return(
+        <h1>asshole</h1>
+      )
+    }
   }
 }
