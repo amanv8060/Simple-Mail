@@ -31,7 +31,7 @@ exports.createUser = async (req, res) => {
 };
 
 exports.getUserData = async (req, res) => {
-    const user = await User.findById(req.docId,'-password' , '-sentemails').populate({
+    const user = await User.findById(req.docId,'-password' ).populate({
         path: 'scheduledemails',
         populate: {
             path: 'email',

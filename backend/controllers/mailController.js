@@ -29,21 +29,29 @@ exports.getSentMails = async (req, res) => {
 };
 
 exports.editSchedule = async (req, res) => {
+    if (req.body.id == undefined || req.body.id == null) {
+        res.status(500).send({ message: "Id not specified" });
+        return
+    }
+    const findEmail = await Schedule.findById({ _id: req.body.id }).populate('email');
+    if (!findEmail) {
+        res.status(500).send({ message: "No email found with that id" });
+        return;
+    }
 
-    const email = await Email.findOneAndUpdate({ _id: req.body.id }, {
+    const email = new Email({
         name: req.body.name,
         to: req.body.to,
         subject: req.body.subject,
         body: req.body.body,
         from: "simplemail@ophilia.in",
         cc: req.body.cc,
-    });
-
-    if (!email) {
-        res.status(500).send({ message: "Some error Occurred" });
-    }
-    else {
-        scheduler.stopById(email._id);
+    })
+    email.save(async (err, response) => {
+        scheduler.stopById(findEmail.email._id);
+        if (err) {
+            res.status(500).send({ message: "Error Creating Email" });
+        }
         const task = new AsyncTask(
             "Send Email",
             async () => {
@@ -52,16 +60,13 @@ exports.editSchedule = async (req, res) => {
                     email: response._id
                 })
                 await sendEmail({
-                    from: `${email.name} ${email.from}`,
-                    to: email.to,
-                    subject: email.subject,
-                    body: email.body,
-                    cc: email.cc,
+                    from: `${response.name} ${response.from}`,
+                    to: response.to,
+                    subject: response.subject,
+                    text: response.body,
+                    cc: response.cc,
                 })
                 await tempSentEmail.save(async (err, sentmailres) => {
-                    if(err){
-                        console.log(err);
-                    }
                     const user = await User.findOneAndUpdate({ _id: req.docId },
                         {
                             $push: {
@@ -69,43 +74,29 @@ exports.editSchedule = async (req, res) => {
                             }
                         })
                 });
-
                 return;
             },
             (err) => { console.log(err); }
         )
-        const job = new SimpleIntervalJob(req.body.interval, task, email._id,);
+        const job = new SimpleIntervalJob(req.body.interval, task, response._id,);
         scheduler.addSimpleIntervalJob(job)
 
-        const tempschedule = new Schedule({
+        const tempschedule = await Schedule.findOneAndUpdate({ email: findEmail.email._id }, {
             interval: req.body.interval,
-            email: email._id,
-            jobid: email._id,
+            email: response._id,
+            jobid: response._id,
         });
-        tempschedule.save(async (err, tempschedule) => {
-            if (err) {
-                res.status(500).send({ message: "Some Error Occurred" });
-            }
-            const user = await User.findOneAndUpdate({ _id: req.docId },
-                {
-                    $push: {
-                        scheduledemails: [tempschedule._id],
-                    }
-                })
 
-            task.execute();
-            if (!user) {
-                res.status(500).send({ message: "Some Error Occurred" });
-            }
-            else {
-                res.status(200).send({ message: "Successful" });
-            }
+        task.execute();
+        if (!tempschedule) {
+            res.status(500).send({ message: "Some Error Occurred" });
+        }
+        else {
+            res.status(200).send({ message: "Successful" });
+        }
 
-        });
-    }
-
+    });
 }
-
 
 exports.createEmail = async (req, res) => {
     const email = new Email({
@@ -131,7 +122,7 @@ exports.createEmail = async (req, res) => {
                     from: `${response.name} ${response.from}`,
                     to: response.to,
                     subject: response.subject,
-                    body: response.body,
+                    text: response.body,
                     cc: response.cc,
                 })
                 await tempSentEmail.save(async (err, sentmailres) => {
@@ -182,12 +173,18 @@ exports.createEmail = async (req, res) => {
 exports.deleteSchedule = async (req, res) => {
     const user = await User.findOneAndUpdate({ _id: req.docId }, { $pull: { scheduledemails: req.query.sId } });
 
-    await Schedule.findByIdAndRemove(req.query.sId);
-
     if (!user) {
         res.status(500).send({ message: "Something went wrong" });
         return;
     }
+    const findEmail = await Schedule.findById({ _id: req.query.sId }).populate('email');
+    if (!findEmail) {
+        res.status(500).send({ message: "No email found with that id" });
+        return;
+    }
+    scheduler.stopById(findEmail.email._id);
+    await Schedule.findByIdAndRemove(req.query.sId);
+
     res.status(200).send({ message: "Schedule Deleted" });
 }
 
