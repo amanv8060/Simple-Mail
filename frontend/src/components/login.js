@@ -142,7 +142,7 @@ const Login = () => {
               <input type="password" placeholder="Password" value={password} onChange={passwordChange} />
               <button onClick={OnSubmit}> Sign Up</button>
               <GoogleLogin
-                clientId="341066356281-c9lr5orrfka4s4v6088jjbib0rcpo955.apps.googleusercontent.com"
+                clientId="341066356281-f7gltndskdv4o9jei7g6eu52ggjm99uc.apps.googleusercontent.com"
                 buttonText="SignUp with Google"
                 onSuccess={responseSuccessGoogle}
                 onFailure={responseFailureGoogle}
@@ -160,7 +160,7 @@ const Login = () => {
               <input type="password" placeholder="Password" value={password} onChange={passwordChange} />
               <button >Sign In</button>
               <GoogleLogin
-                clientId="341066356281-c9lr5orrfka4s4v6088jjbib0rcpo955.apps.googleusercontent.com"
+                clientId="341066356281-f7gltndskdv4o9jei7g6eu52ggjm99uc.apps.googleusercontent.com"
                 buttonText="SignIn with Google"
                 onSuccess={responseSuccessGoogle}
                 onFailure={responseFailureGoogle}
