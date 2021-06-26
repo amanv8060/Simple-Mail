@@ -46,8 +46,8 @@ Header
     name: user.name,
     email: user.email,
     avtarUrl: user.avtarUrl,
-    emails : List of Emails Sent till now,
-    scheduled: List of Scheduled Emails
+    scheduledemails: List of Scheduled Emails
+    token:token
 }
 
 Status: 401
@@ -64,7 +64,7 @@ Status: 500
 3. JWT Verify
 
 ```bash
-POST auth/token/verify
+POST token/verify
 
 Header
 x-access-token: JWT
@@ -94,4 +94,60 @@ Status: 200
 
 Status: 401
 { message: false }
+```
+
+5. Get User Data
+
+```bash
+GET auth/user/getdata
+
+Header
+Content-Type: application/json
+x-access-token: JWT
+
+Response
+Status: 200
+{
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    scheduledmails: List of Scheduled Emails
+}
+
+Status: 401
+{ message: 'Invalid Password' }
+
+Status: 404
+{ message: 'Email Not Found' }
+
+Status: 500
+{ message: Error(Whatever the error is) }
+```
+
+6. Google Login
+
+```bash
+GET auth/user/getdata
+
+Header
+Content-Type: application/json
+
+Body
+{
+    tokenId:String
+}
+
+Response
+Status: 200
+{
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    avtarUrl: user.avtarUrl,
+    scheduledemails: user.scheduledemails,
+    token: token,
+}
+
+Status: 500
+{ message: Error(Whatever the error is) }
 ```

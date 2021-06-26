@@ -19,13 +19,11 @@ let EmailSchema = new Schema(
         ],
         subject: {
             type: String,
+            required:true,
         },
         body: {
             type: String,
             required: true
-        },
-        sentTime: {
-            type: Date,
         },
         from:{
             type:String,
