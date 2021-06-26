@@ -10,7 +10,6 @@ const client = new OAuth2Client(process.env.CLIENTID);
 const User = db.user;
 
 exports.createUser = async (req, res) => {
-
     const hash = await argon2.hash(req.body.password, {
         type: argon2.argon2id,
     });
@@ -31,6 +30,21 @@ exports.createUser = async (req, res) => {
     });
 };
 
+exports.getUserData = async (req, res) => {
+    const user = await User.findById(req.docId,'-password' , '-sentemails').populate({
+        path: 'scheduledemails',
+        populate: {
+            path: 'email',
+        }
+    }
+    );
+    if(!user){
+        res.status(500).send({message:"Some error Occurred"});
+        }
+        else{
+            res.status(200).send(user);
+        }
+}
 
 exports.userSignin = async (req, res) => {
     let user;
@@ -45,7 +59,7 @@ exports.userSignin = async (req, res) => {
         return res.status(401).send({ message: 'Invalid Password' });
     }
     const token = jwt.sign(
-        { id: user.id },
+        { id: user.id, email: user.email },
         process.env.SECRET_KEY,
         {
             expiresIn: 604800, // 7 Days (in sec)
@@ -71,11 +85,8 @@ exports.userSignin = async (req, res) => {
 exports.checkLoginId = async (req, res) => {
     let user;
 
-    if (isNumeric(req.query.lId)) {
-        user = await User.findOne({ phone: req.query.lId });
-    } else {
-        user = await User.findOne({ email: req.query.lId });
-    }
+    user = await User.findOne({ email: req.query.lId });
+
 
     if (!user) {
         return res.status(401).send({ message: false });
@@ -115,7 +126,7 @@ exports.googleLogin = async (req, res) => {
                 else {
                     if (user) {
                         const token = jwt.sign(
-                            { id: user.id },
+                            { id: user.id, email: user.email },
                             process.env.SECRET_KEY,
                             {
                                 expiresIn: 604800, // 7 Days (in sec)
@@ -157,7 +168,7 @@ exports.googleLogin = async (req, res) => {
                                 return;
                             } else {
                                 const token = jwt.sign(
-                                    { id: user.id },
+                                    { id: user.id, email: user.email },
                                     process.env.SECRET_KEY,
                                     {
                                         expiresIn: 604800, // 7 Days (in sec)

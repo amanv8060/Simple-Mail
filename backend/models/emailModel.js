@@ -6,6 +6,7 @@ let EmailSchema = new Schema(
     {
         name: {
             type: String,
+            required :true,
         },
         to: {
             type: String,
@@ -25,6 +26,10 @@ let EmailSchema = new Schema(
         },
         sentTime: {
             type: Date,
+        },
+        from:{
+            type:String,
+            required:true,
         }
     },
     { collection: "EMAILS" },

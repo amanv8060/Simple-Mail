@@ -36,8 +36,8 @@ db.mongoose
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
-
-app.use('/api/v1', [authRoutes]);;
+const mailRoutes = require('./routes/mailRoutes');
+app.use('/api/v1', [authRoutes , mailRoutes]);;
 
 
 // Listen

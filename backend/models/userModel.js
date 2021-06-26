@@ -25,7 +25,7 @@ let UserSchema = new Schema(
         sentemails: [
             {
                 type: Schema.Types.ObjectId,
-                ref: "EMAIL"
+                ref: "SENTEMAILS"
             }
         ],
         scheduledemails: [
