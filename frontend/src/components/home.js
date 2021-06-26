@@ -1,103 +1,105 @@
 import React, { Component } from "react";
-import {  Menu, Segment } from "semantic-ui-react";
+import { Menu, Segment } from "semantic-ui-react";
+
+
+import axios from 'axios';
+
 export default class MenuExamplePointing extends Component {
   state = { activeItem: "Scheduled Emails" };
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
-  componentDidMount =() =>{
-    fetch(`https://simplemailbackend.herokuapp.com/api/v1/auth/user/getdata`, {
-      method: "get",
+  logout = () => {
+
+    localStorage.setItem('jwt', null)
+    window.open("/","_self")
+  }
+  constructor(props) {
+    super(props);
+    axios.get('https://simplemailbackend.herokuapp.com/api/v1/token/verify', {
       headers: {
-        "Content-Type": "application/json",
-        "x-access-token": `${localStorage.getItem("jwt")}`,
-      },
-    
-    })  .then((res) => res.json())
-    .then(
-      data =>{
-        console.log(data)
-       
-        
-      },
-      err =>{
-       console.log(err)
+        "x-access-token": localStorage.getItem('jwt')
       }
-    )
+    }).then(resp => {
+      console.log(resp);
+    }).catch(er => {
+      window.open("/", "_self");
+    });
   }
   render() {
     const { activeItem } = this.state;
-    if(localStorage.getItem("jwt") !=null && localStorage.getItem("jwt") !=undefined) {
+    if (localStorage.getItem('jwt') === undefined || localStorage.getItem('jwt') === null)
+      return <p>You are not logged in , redirecting to login page</p>
     return (
       <div>
-        <div style={{ backgroundColor: "#39A2DB" ,position:"relative",bottom:"80px",height:"70px",width:"92rem"}}>
-          <p style={{ color: "#fff", textAlign: "left" ,fontSize:"27px",fontWeight:"bold",position:"relative",top:"19px",left:"20px"}}>SimpleMail</p>
-          <button style={{position:"relative",right:"10px",top:"-45px"}}class="ui right floated negative basic button"> Logout</button>
+        <div style={{ backgroundColor: "#39A2DB", position: "relative", bottom: "80px", height: "70px", width: "92rem" }}>
+          <p style={{ color: "#fff", textAlign: "left", fontSize: "27px", fontWeight: "bold", position: "relative", top: "19px", left: "20px" }}>SimpleMail</p>
+          <button style={{ position: "relative", right: "10px", top: "-45px" }} onClick={this.logout} class="ui right floated negative basic button"> Logout</button>
         </div>
-        <div style={{position:"relative",left:"40px",top:"-50px"}}>
-        <Menu pointing>
-          <Menu.Item
-            name=" Scheduled Emails"
-            active={activeItem === "Scheduled Emails"}
-            onClick={this.handleItemClick}
-          />
-          <Menu.Item
-            name="Expired Emails"
-            active={activeItem === "Expired Emails"}
-            onClick={this.handleItemClick}
-          />
- 
-        </Menu>
-        <div> <button style={{position:"relative",right:"120px",top:"-72px"}}class="ui right floated secondary basic button">
-        <h3  style={{textAlign:"center",cursor:"pointer"}}>Create <i class="plus icon"></i></h3>
-          </button> </div>      
-</div><div style={{width:"85.3rem",position:"relative",left:"40px",top:"-40px"}}>
-        <Segment>
-          <table class="ui celled striped table">
-            <thead>
-              <tr>
-                <th colspan="3">All Emails</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="collapsing">
-                <i class="calendar icon"></i>JOB 1
-                </td>
-                <td>Subject of Mail</td>
-                <td class="right aligned collapsing"><i class="edit icon"></i></td>
-              </tr>
-              <tr>
-              <td class="collapsing">
-                <i class="calendar icon"></i>JOB 1
-                </td>
-                <td>Subject of Mail</td>
-                <td class="right aligned collapsing"><i class="edit icon"></i></td>
-              </tr>
-              <tr>
-              <td class="collapsing">
-                <i class="calendar icon"></i>JOB 1
-                </td>
-                <td>Subject of Mail</td>
-                <td class="right aligned collapsing"><i class="edit icon"></i></td>
-              </tr>
-              <tr>
-              <td class="collapsing">
-                <i class="calendar icon"></i>JOB 1
-                </td>
-                <td>Subject of Mail</td>
-                <td class="right aligned collapsing"><i class="edit icon"></i></td>
-              </tr>
-              <tr>
-              <td class="collapsing">
-                <i class="calendar icon"></i>JOB 1
-                </td>
-                <td>Subject of Mail</td>
-                <td class="right aligned collapsing"><i class="edit icon"></i></td>
-              </tr>
-            </tbody>
-          </table>
-        </Segment>
+        <div style={{ position: "relative", left: "40px", top: "-50px" }}>
+          <Menu pointing>
+            <Menu.Item
+              name=" Scheduled Emails"
+              active={activeItem === "Scheduled Emails"}
+              onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="Expired Emails"
+              active={activeItem === "Expired Emails"}
+              onClick={this.handleItemClick}
+            />
+
+          </Menu>
+          <div> <button style={{ position: "relative", right: "120px", top: "-72px" }} class="ui right floated secondary basic button">
+            <h3 style={{ textAlign: "center", cursor: "pointer" }}>Create <i class="plus icon"></i></h3>
+          </button> </div>
+        </div><div style={{ width: "85.3rem", position: "relative", left: "40px", top: "-40px" }}>
+          <Segment>
+            <table class="ui celled striped table">
+              <thead>
+                <tr>
+                  <th colspan="3">All Emails</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="collapsing">
+                    <i class="calendar icon"></i>JOB 1
+                  </td>
+                  <td>Subject of Mail</td>
+                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                </tr>
+                <tr>
+                  <td class="collapsing">
+                    <i class="calendar icon"></i>JOB 1
+                  </td>
+                  <td>Subject of Mail</td>
+                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                </tr>
+                <tr>
+                  <td class="collapsing">
+                    <i class="calendar icon"></i>JOB 1
+                  </td>
+                  <td>Subject of Mail</td>
+                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                </tr>
+                <tr>
+                  <td class="collapsing">
+                    <i class="calendar icon"></i>JOB 1
+                  </td>
+                  <td>Subject of Mail</td>
+                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                </tr>
+                <tr>
+                  <td class="collapsing">
+                    <i class="calendar icon"></i>JOB 1
+                  </td>
+                  <td>Subject of Mail</td>
+                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                </tr>
+              </tbody>
+            </table>
+          </Segment>
         </div>
       </div>
     );

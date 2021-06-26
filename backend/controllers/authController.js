@@ -114,8 +114,7 @@ function makePassword(length) {
 exports.googleLogin = async (req, res) => {
     const { tokenId } = req.body;
     client.verifyIdToken({ idToken: tokenId, audience: process.env.CLIENTID }).then(response => {
-        const { email_verified, name, email } = response.getPayload;
-
+        const { email_verified, name, email } = response.payload;
         if (email_verified) {
             User.findOne({ email }).exec(async (err, user) => {
                 if (err) {
