@@ -106,7 +106,7 @@ exports.googleLogin = async (req, res) => {
         const { email_verified, name, email } = response.getPayload;
 
         if (email_verified) {
-            User.findOne({ email }).exec(async(err, user) => {
+            User.findOne({ email }).exec(async (err, user) => {
                 if (err) {
                     res.status(400).send({
                         message: 'Some error Occurred'
@@ -151,10 +151,10 @@ exports.googleLogin = async (req, res) => {
                             email: email,
                             password: hash,
                         });
-                     await   user.save(async (err, user) => {
-                            if(err) {
+                        await user.save(async (err, user) => {
+                            if (err) {
                                 res.status(500).send({ message: err });
-                            return
+                                return;
                             } else {
                                 const token = jwt.sign(
                                     { id: user.id },
