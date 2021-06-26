@@ -5,10 +5,29 @@ export default class MenuExamplePointing extends Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
-
+  componentDidMount =() =>{
+    fetch(`https://simplemailbackend.herokuapp.com/api/v1/auth/user/getdata`, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": `${localStorage.getItem("jwt")}`,
+      },
+    
+    })  .then((res) => res.json())
+    .then(
+      data =>{
+        console.log(data)
+       
+        
+      },
+      err =>{
+       console.log(err)
+      }
+    )
+  }
   render() {
     const { activeItem } = this.state;
-
+    if(localStorage.getItem("jwt") !=null && localStorage.getItem("jwt") !=undefined) {
     return (
       <div>
         <div style={{ backgroundColor: "#39A2DB" ,position:"relative",bottom:"80px",height:"70px",width:"92rem"}}>
@@ -82,5 +101,12 @@ export default class MenuExamplePointing extends Component {
         </div>
       </div>
     );
+    }
+ if(localStorage.getItem("jwt") === null && localStorage.getItem("jwt") == undefined) 
+    {
+      return(
+        <h1>asshole</h1>
+      )
+    }
   }
 }
