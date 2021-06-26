@@ -1,6 +1,96 @@
-import React from 'react'
+import {React,useState} from 'react'
 import './login.css'
 const Login = () => {
+  const [Name, setName] = useState("");
+  const [emailID, setEmailID] = useState("");
+  const [password, setPassword] = useState("");
+  const [isEmailIdEmpty, setIsEmailIdEmpty] = useState(false);
+  const [isNameEmpty, setIsNameEmpty] = useState(false);
+  const [isPasswordEmpty, setIsPasswordEmpty] = useState(false);
+  function NameChange(e) {
+    setName(e.target.value);
+    console.log(Name)
+  }
+  function emailIDChange(e) {
+    setEmailID(e.target.value);
+    console.log(emailID);
+  }
+  function passwordChange(e) {
+    setPassword(e.target.value);
+    console.log(password);
+  }
+  function OnSubmit() {
+    if (Name === "") {
+      setIsNameEmpty(true);
+    }
+    if (Name) {
+      setIsNameEmpty(false);
+    }
+    if (emailID === "") {
+      setIsEmailIdEmpty(true);
+    }
+    if (emailID) {
+      setIsEmailIdEmpty(false);
+    }
+    if (password === "") {
+      setIsPasswordEmpty(true);
+    }
+    if (password) {
+      setIsPasswordEmpty(false);
+    }
+  if(Name && emailID && password){
+    fetch(`https://simplemailbackend.herokuapp.com/api/v1/auth/user/signup`, {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name:Name,
+        email: emailID,
+        password: password,
+      }),
+    })
+    .then((response) => response.json())
+    alert("Account Successfully Created Signin To Continue")
+  }
+  
+  }
+  function handleSubmit(e){
+    e.preventDefault();
+    if (emailID === "") {
+      setIsEmailIdEmpty(true);
+    }
+    if (emailID) {
+      setIsEmailIdEmpty(false);
+    }
+    if (password === "") {
+      setIsPasswordEmpty(true);
+    }
+    if (password) {
+      setIsPasswordEmpty(false);
+    }
+    if(emailID && password){
+      fetch(`https://simplemailbackend.herokuapp.com/api/v1/auth/user/signin`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailID,
+          password: password,
+        }),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem("jwt", data.token);
+        window.open("/home", "_self");
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+  }
   const afterClick = () =>{
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');
@@ -20,19 +110,21 @@ const Login = () => {
       <div className="form-container sign-up-container">
         <form action="#">
           <h1>Create Account</h1>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign Up</button>
+          <input type="text" placeholder="Name" value={Name} onChange={NameChange} />
+          <input type="email" placeholder="Email"  value={emailID}
+              onChange={emailIDChange}/>
+          <input type="password" placeholder="Password" value={password} onChange={passwordChange}/>
+          <button onClick={OnSubmit}> Sign Up</button>
         </form>
       </div>
       <div className="form-container sign-in-container">
-        <form action="#">
+        <form action="#" onSubmit={handleSubmit}>
           <h1>Sign in</h1>
         
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign In</button>
+          <input type="email" placeholder="Email" value={emailID}
+              onChange={emailIDChange}/>
+          <input type="password" placeholder="Password" value={password} onChange={passwordChange}/>
+          <button >Sign In</button>
         </form>
       </div>
       <div className="overlay-container">
