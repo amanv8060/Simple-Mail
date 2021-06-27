@@ -16,6 +16,10 @@ export default class MenuExamplePointing extends Component {
   constructor(props) {
     super(props);
     this.state = { show: false }
+    this.state = {
+      items: [],
+    };
+    
     axios.get('https://simplemailbackend.herokuapp.com/api/v1/token/verify', {
       headers: {
         "x-access-token": localStorage.getItem('jwt')
@@ -25,9 +29,27 @@ export default class MenuExamplePointing extends Component {
     }).catch(er => {
       window.open("/", "_self");
     });
+  
   }
   moduleHandler = () => {
     this.setState({ show: true });
+  }
+  componentDidMount() {  this.ExpiredMails()}
+  ExpiredMails = () => {
+    fetch(`https://simplemailbackend.herokuapp.com/api/v1/mails/getsent`, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem('jwt')
+      }
+    }).then((res) => res.json())
+    .then((data) => {console.log(data) 
+      this.setState({
+      items: data.sentemails.map(item => ({
+             subject: item.email.subject,
+             sentTime: item.sentTime
+    }))
+    })})
   }
   render() {
     const { activeItem } = this.state;
@@ -69,40 +91,49 @@ export default class MenuExamplePointing extends Component {
                   </tr>
                 </thead>
                 <tbody>
+                {console.log(this.state.items)}
+               {this.state.items.map(item => {
+                 <tr>
+                 <td class="collapsing">
+                   <i class="calendar icon"></i>JOB 1
+                 </td>
+                 <td> gdjngj</td>
+               
+               </tr>
+               })}
                   <tr>
                     <td class="collapsing">
                       <i class="calendar icon"></i>JOB 1
                     </td>
                     <td>Subject of Mail</td>
-                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                  
                   </tr>
                   <tr>
                     <td class="collapsing">
                       <i class="calendar icon"></i>JOB 1
                     </td>
                     <td>Subject of Mail</td>
-                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                  
                   </tr>
                   <tr>
                     <td class="collapsing">
                       <i class="calendar icon"></i>JOB 1
                     </td>
                     <td>Subject of Mail</td>
-                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                  
                   </tr>
                   <tr>
                     <td class="collapsing">
                       <i class="calendar icon"></i>JOB 1
                     </td>
                     <td>Subject of Mail</td>
-                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                  
                   </tr>
                   <tr>
                     <td class="collapsing">
                       <i class="calendar icon"></i>JOB 1
                     </td>
                     <td>Subject of Mail</td>
-                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
                   </tr>
                 </tbody>
               </table>
