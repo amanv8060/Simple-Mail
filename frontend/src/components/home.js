@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Menu, Segment } from "semantic-ui-react";
 import Modal from "./modal";
 import axios from 'axios';
+var moment = require('moment');
 
 export default class MenuExamplePointing extends Component {
   state = { activeItem: "Scheduled Emails" };
@@ -105,7 +106,7 @@ export default class MenuExamplePointing extends Component {
                   {this.state.items.map(item => {
                     return[ <tr>
                       <td class="collapsing">
-                        {item.sentTime}
+                        {moment(item.sentTime).fromNow()}
                       </td>
                       <td> {item.subject}
                       </td>
