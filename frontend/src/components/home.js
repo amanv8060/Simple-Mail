@@ -79,8 +79,9 @@ export default class MenuExamplePointing extends Component {
           console.log(data)
           this.setState({
             it: data.scheduledemails.map(item => ({
-              email:item.email,
-              jobid:item.jobid
+              email: item.email,
+              jobid: item.jobid,
+              interval: item.interval
             }))
           })
         })
@@ -159,9 +160,9 @@ export default class MenuExamplePointing extends Component {
                     {this.state.it.map(item => {
                       return [<tr>
                         <td class="collapsing">
-                          <i class="calendar icon"></i>{item.email.subject}
+                          <i class="calendar icon"></i>{`${item.interval.days} days ,${item.interval.hours} hrs , ${item.interval.minutes} mins, ${item.interval.seconds} secs `}
                         </td>
-                        <td>{item.email.body}</td>
+                        <td>{item.email.subject}</td>
                         <td class="right aligned collapsing"><i class="edit icon"></i></td>
                       </tr>]
                     })}
