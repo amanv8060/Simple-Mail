@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Menu, Segment } from "semantic-ui-react";
 import Modal from "./modal";
 import axios from 'axios';
+import EditModal from "./EditModal";
 var moment = require('moment');
 
 export default class MenuExamplePointing extends Component {
@@ -19,6 +20,7 @@ export default class MenuExamplePointing extends Component {
     this.state = { show: false }
     this.state = {
       items: [],
+      it:[],
     };
 
     axios.get('https://simplemailbackend.herokuapp.com/api/v1/token/verify', {
@@ -54,6 +56,29 @@ export default class MenuExamplePointing extends Component {
             items: data.sentemails.map(item => ({
               subject: item.email.subject,
               sentTime: item.sentTime
+            }))
+          })
+        })
+
+      }
+    })
+
+  }
+  ExpiredMails = () => {
+    fetch(`https://simplemailbackend.herokuapp.com/api/v1/auth/user/getdata`, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": localStorage.getItem('jwt')
+      }
+    }).then((res) => {
+      if (res.status === 200) {
+        res.json().then(data => {
+
+          console.log(data)
+          this.setState({
+            it: data.scheduledemails.map(item => ({
+           
             }))
           })
         })
@@ -133,7 +158,7 @@ export default class MenuExamplePointing extends Component {
                         <i class="calendar icon"></i>Scheduled
                       </td>
                       <td>Subject of Mail</td>
-                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                      <td class="right aligned collapsing"><EditModal/></td>
                     </tr>
                     <tr>
                       <td class="collapsing">
