@@ -160,7 +160,7 @@ export default class MenuExamplePointing extends Component {
                           <i class="calendar icon"></i>{`${item.interval.days} days ,${item.interval.hours} hrs , ${item.interval.minutes} mins, ${item.interval.seconds} secs `}
                         </td>
                         <td>{item.email.subject}</td>
-                        <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                        <td class="right aligned collapsing"><EditModal/></td>
                       </tr>]
                     })}
                   </tbody>
