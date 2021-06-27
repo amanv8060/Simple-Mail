@@ -58,7 +58,7 @@ function ModalExampleModal() {
           "x-access-token": localStorage.getItem('jwt')
         },
         body: JSON.stringify({
-          name: "yashvi",
+          name: "Admin",
           to: to,
           subject: subject,
           body: convertedText,
