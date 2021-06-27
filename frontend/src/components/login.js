@@ -68,7 +68,7 @@ const Login = () => {
       data: { tokenId: response.tokenId }
     }).then(resp => {
       localStorage.setItem('jwt', resp.data.token)
-      window.open('/home','_self');
+      window.open('/home', '_self');
     });
   }
 
@@ -101,20 +101,20 @@ const Login = () => {
           password: password,
         }),
       })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.email);
-        localStorage.setItem("jwt", data.token);
-        if(data.email){
-        window.open("/home", "_self");}
-        else
-       {
-         alert("Fill Up Correct Information")
-       }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.email);
+          localStorage.setItem("jwt", data.token);
+          if (data.email) {
+            window.open("/home", "_self");
+          }
+          else {
+            alert("Fill Up Correct Information")
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
   }
   const afterClick = () => {
