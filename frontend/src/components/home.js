@@ -20,7 +20,7 @@ export default class MenuExamplePointing extends Component {
     this.state = { show: false }
     this.state = {
       items: [],
-      it:[],
+      it: [],
     };
 
     axios.get('https://simplemailbackend.herokuapp.com/api/v1/token/verify', {
@@ -39,6 +39,7 @@ export default class MenuExamplePointing extends Component {
   }
   componentDidMount() {
     this.ExpiredMails()
+    this.ScheduledEmails()
   }
   ExpiredMails = () => {
     fetch(`https://simplemailbackend.herokuapp.com/api/v1/mails/getsent`, {
@@ -64,7 +65,7 @@ export default class MenuExamplePointing extends Component {
     })
 
   }
-  ExpiredMails = () => {
+  ScheduledEmails = () => {
     fetch(`https://simplemailbackend.herokuapp.com/api/v1/auth/user/getdata`, {
       method: "get",
       headers: {
@@ -78,7 +79,8 @@ export default class MenuExamplePointing extends Component {
           console.log(data)
           this.setState({
             it: data.scheduledemails.map(item => ({
-           
+              email:item.email,
+              jobid:item.jobid
             }))
           })
         })
@@ -129,7 +131,7 @@ export default class MenuExamplePointing extends Component {
                 <tbody>
 
                   {this.state.items.map(item => {
-                    return[ <tr>
+                    return [<tr>
                       <td class="collapsing">
                         {moment(item.sentTime).fromNow()}
                       </td>
@@ -143,7 +145,7 @@ export default class MenuExamplePointing extends Component {
             </Segment>
           </div>)
           : (
-            <div style={{ width: "85.3rem", position: "relative", left: "40px", top: "-40px" }}>
+            (<div style={{ width: "85.3rem", position: "relative", left: "40px", top: "-40px" }}>
 
               <Segment>
                 <table class="ui celled striped table">
@@ -153,45 +155,22 @@ export default class MenuExamplePointing extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="collapsing">
-                        <i class="calendar icon"></i>Scheduled
-                      </td>
-                      <td>Subject of Mail</td>
-                      <td class="right aligned collapsing"><EditModal/></td>
-                    </tr>
-                    <tr>
-                      <td class="collapsing">
-                        <i class="calendar icon"></i>JOB 1
-                      </td>
-                      <td>Subject of Mail</td>
-                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
-                    </tr>
-                    <tr>
-                      <td class="collapsing">
-                        <i class="calendar icon"></i>JOB 1
-                      </td>
-                      <td>Subject of Mail</td>
-                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
-                    </tr>
-                    <tr>
-                      <td class="collapsing">
-                        <i class="calendar icon"></i>JOB 1
-                      </td>
-                      <td>Subject of Mail</td>
-                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
-                    </tr>
-                    <tr>
-                      <td class="collapsing">
-                        <i class="calendar icon"></i>JOB 1
-                      </td>
-                      <td>Subject of Mail</td>
-                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
-                    </tr>
+
+                    {this.state.it.map(item => {
+                      return [<tr>
+                        <td class="collapsing">
+                          <i class="calendar icon"></i>{item.email.subject}
+                        </td>
+                        <td>{item.email.body}</td>
+                        <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                      </tr>]
+                    })}
                   </tbody>
                 </table>
               </Segment>
-            </div>
+            </div>)
+
+
           )}
 
       </div>
