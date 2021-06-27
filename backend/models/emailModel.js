@@ -6,7 +6,6 @@ let EmailSchema = new Schema(
     {
         name: {
             type: String,
-            required :true,
         },
         to: {
             type: String,
