@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Menu, Segment } from "semantic-ui-react";
-
-
+import Modal from "./modal";
 import axios from 'axios';
 
 export default class MenuExamplePointing extends Component {
@@ -16,6 +15,7 @@ export default class MenuExamplePointing extends Component {
   }
   constructor(props) {
     super(props);
+    this.state = { show: false}
     axios.get('https://simplemailbackend.herokuapp.com/api/v1/token/verify', {
       headers: {
         "x-access-token": localStorage.getItem('jwt')
@@ -25,6 +25,9 @@ export default class MenuExamplePointing extends Component {
     }).catch(er => {
       window.open("/", "_self");
     });
+  }
+  moduleHandler=() =>{
+     this.setState({show:true});
   }
   render() {
     const { activeItem } = this.state;
@@ -50,9 +53,10 @@ export default class MenuExamplePointing extends Component {
             />
 
           </Menu>
-          <div> <button style={{ position: "relative", right: "120px", top: "-72px" }} class="ui right floated secondary basic button">
-            <h3 style={{ textAlign: "center", cursor: "pointer" }}>Create <i class="plus icon"></i></h3>
-          </button> </div>
+         
+          <div> 
+          <Modal/>
+          </div>
         </div><div style={{ width: "85.3rem", position: "relative", left: "40px", top: "-40px" }}>
           <Segment>
             <table class="ui celled striped table">
