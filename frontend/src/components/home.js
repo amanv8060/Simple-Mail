@@ -28,7 +28,6 @@ export default class MenuExamplePointing extends Component {
         "x-access-token": localStorage.getItem('jwt')
       }
     }).then(resp => {
-      console.log(resp);
     }).catch(er => {
       window.open("/", "_self");
     });
@@ -52,7 +51,6 @@ export default class MenuExamplePointing extends Component {
       if (res.status === 200) {
         res.json().then(data => {
 
-          console.log(data)
           this.setState({
             items: data.sentemails.map(item => ({
               subject: item.email.subject,
@@ -76,7 +74,6 @@ export default class MenuExamplePointing extends Component {
       if (res.status === 200) {
         res.json().then(data => {
 
-          console.log(data)
           this.setState({
             it: data.scheduledemails.map(item => ({
               email: item.email,

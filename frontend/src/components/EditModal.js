@@ -15,7 +15,6 @@ function ModalExampleModal() {
   const [interval, setInterval] = useState({ minutes: 0, seconds: 0, hours: 0, days: 0 });
   function onchangeInterval(e) {
 
-    console.log("beofre", interval)
     switch (e.target.id) {
       case "intervaldays": setInterval({
         minutes: interval.minutes, seconds: interval.seconds, hours: interval.hours, days: e.target.value
@@ -37,23 +36,18 @@ function ModalExampleModal() {
         break;
       default:
     }
-    console.log("after", interval)
   }
   function FromChange(e) {
     setFrom(e.target.value);
-    console.log(from)
   }
   function ToChange(e) {
     setTo(e.target.value);
-    console.log(to)
   }
   function subjectChange(e) {
     setSubject(e.target.value);
-    console.log(subject);
   }
   function ccChange(e) {
     setCc(e.target.value);
-    console.log(cc);
   }
   function OnSubmit() {
     if (to && convertedText && subject) {

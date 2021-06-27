@@ -13,15 +13,12 @@ const Login = () => {
   const [isPasswordEmpty, setIsPasswordEmpty] = useState(false);
   function NameChange(e) {
     setName(e.target.value);
-    console.log(Name)
   }
   function emailIDChange(e) {
     setEmailID(e.target.value);
-    console.log(emailID);
   }
   function passwordChange(e) {
     setPassword(e.target.value);
-    console.log(password);
   }
   function OnSubmit() {
     if (Name === "") {
@@ -61,7 +58,6 @@ const Login = () => {
   }
 
   const responseSuccessGoogle = (response) => {
-    console.log(response);
     axios({
       method: "PUT",
       url: "https://simplemailbackend.herokuapp.com/api/v1/auth/user/googlelogin",
@@ -103,7 +99,6 @@ const Login = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.email);
           localStorage.setItem("jwt", data.token);
           if (data.email) {
             window.open("/home", "_self");

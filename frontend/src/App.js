@@ -27,7 +27,6 @@ class App extends React.Component {
           "x-access-token": localStorage.getItem('jwt')
         }
       }).then(resp => {
-        console.log(resp);
         window.open("/home", "_self");
       }).catch(er => {
         console.log(er)
