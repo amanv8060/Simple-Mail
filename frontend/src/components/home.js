@@ -11,11 +11,11 @@ export default class MenuExamplePointing extends Component {
   logout = () => {
 
     localStorage.setItem('jwt', null)
-    window.open("/","_self")
+    window.open("/", "_self")
   }
   constructor(props) {
     super(props);
-    this.state = { show: false}
+    this.state = { show: false }
     axios.get('https://simplemailbackend.herokuapp.com/api/v1/token/verify', {
       headers: {
         "x-access-token": localStorage.getItem('jwt')
@@ -26,8 +26,8 @@ export default class MenuExamplePointing extends Component {
       window.open("/", "_self");
     });
   }
-  moduleHandler=() =>{
-     this.setState({show:true});
+  moduleHandler = () => {
+    this.setState({ show: true });
   }
   render() {
     const { activeItem } = this.state;
@@ -53,59 +53,115 @@ export default class MenuExamplePointing extends Component {
             />
 
           </Menu>
-         
-          <div> 
-          <Modal/>
+
+          <div>
+            <Modal />
           </div>
-        </div><div style={{ width: "85.3rem", position: "relative", left: "40px", top: "-40px" }}>
-          <Segment>
-            <table class="ui celled striped table">
-              <thead>
-                <tr>
-                  <th colspan="3">All Emails</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="collapsing">
-                    <i class="calendar icon"></i>JOB 1
-                  </td>
-                  <td>Subject of Mail</td>
-                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
-                </tr>
-                <tr>
-                  <td class="collapsing">
-                    <i class="calendar icon"></i>JOB 1
-                  </td>
-                  <td>Subject of Mail</td>
-                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
-                </tr>
-                <tr>
-                  <td class="collapsing">
-                    <i class="calendar icon"></i>JOB 1
-                  </td>
-                  <td>Subject of Mail</td>
-                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
-                </tr>
-                <tr>
-                  <td class="collapsing">
-                    <i class="calendar icon"></i>JOB 1
-                  </td>
-                  <td>Subject of Mail</td>
-                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
-                </tr>
-                <tr>
-                  <td class="collapsing">
-                    <i class="calendar icon"></i>JOB 1
-                  </td>
-                  <td>Subject of Mail</td>
-                  <td class="right aligned collapsing"><i class="edit icon"></i></td>
-                </tr>
-              </tbody>
-            </table>
-          </Segment>
         </div>
+        {(activeItem === "Expired Emails") ?
+          (<div style={{ width: "85.3rem", position: "relative", left: "40px", top: "-40px" }}>
+
+            <Segment>
+              <table class="ui celled striped table">
+                <thead>
+                  <tr>
+                    <th colspan="3">All Emails</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="collapsing">
+                      <i class="calendar icon"></i>JOB 1
+                    </td>
+                    <td>Subject of Mail</td>
+                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                  </tr>
+                  <tr>
+                    <td class="collapsing">
+                      <i class="calendar icon"></i>JOB 1
+                    </td>
+                    <td>Subject of Mail</td>
+                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                  </tr>
+                  <tr>
+                    <td class="collapsing">
+                      <i class="calendar icon"></i>JOB 1
+                    </td>
+                    <td>Subject of Mail</td>
+                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                  </tr>
+                  <tr>
+                    <td class="collapsing">
+                      <i class="calendar icon"></i>JOB 1
+                    </td>
+                    <td>Subject of Mail</td>
+                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                  </tr>
+                  <tr>
+                    <td class="collapsing">
+                      <i class="calendar icon"></i>JOB 1
+                    </td>
+                    <td>Subject of Mail</td>
+                    <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+            </Segment>
+          </div>)
+          : (
+            <div style={{ width: "85.3rem", position: "relative", left: "40px", top: "-40px" }}>
+
+              <Segment>
+                <table class="ui celled striped table">
+                  <thead>
+                    <tr>
+                      <th colspan="3">All Emails</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="collapsing">
+                        <i class="calendar icon"></i>Scheduled
+                      </td>
+                      <td>Subject of Mail</td>
+                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                    </tr>
+                    <tr>
+                      <td class="collapsing">
+                        <i class="calendar icon"></i>JOB 1
+                      </td>
+                      <td>Subject of Mail</td>
+                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                    </tr>
+                    <tr>
+                      <td class="collapsing">
+                        <i class="calendar icon"></i>JOB 1
+                      </td>
+                      <td>Subject of Mail</td>
+                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                    </tr>
+                    <tr>
+                      <td class="collapsing">
+                        <i class="calendar icon"></i>JOB 1
+                      </td>
+                      <td>Subject of Mail</td>
+                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                    </tr>
+                    <tr>
+                      <td class="collapsing">
+                        <i class="calendar icon"></i>JOB 1
+                      </td>
+                      <td>Subject of Mail</td>
+                      <td class="right aligned collapsing"><i class="edit icon"></i></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Segment>
+            </div>
+          )}
+
       </div>
     );
-    }
+  }
+
 }
