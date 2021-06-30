@@ -176,7 +176,7 @@ const Login = () => {
               </div>
               <div className="overlay-panel overlay-right">
                 <h1>SimpleMail</h1>
-                <p>Helps in reseduling mails </p>
+                <p>Helps in Scheduling recurring mails </p>
                 <button onClick={afterClick} className="ghost" id="signUp">
                   Sign Up
                 </button>
